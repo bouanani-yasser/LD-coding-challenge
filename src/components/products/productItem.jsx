@@ -1,4 +1,4 @@
-function ProductItem({ path, name, desc, price }) {
+function ProductItem({ path, name, desc, price, setCart, product }) {
    return (
       <div className="product-item">
          <img src={`/imgs/${path}`} />
@@ -11,7 +11,9 @@ function ProductItem({ path, name, desc, price }) {
                <img src="/imgs/dummy-rating-stars.png" />
             </div>
             <bdi className="price">{price} $</bdi>
-            <button>Add to Cart</button>
+            <button onClick={() => setCart((prev) => [...prev, product])}>
+               Add to Cart
+            </button>
          </div>
       </div>
    );
