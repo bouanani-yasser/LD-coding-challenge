@@ -1,4 +1,8 @@
-function ProductItem({ cart, setCart, product }) {
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/actions/cart';
+
+function ProductItem({ product }) {
+   const dispatch = useDispatch();
    return (
       <div className="product-item">
          <img src={`/imgs/${product.imgPath}`} />
@@ -11,12 +15,7 @@ function ProductItem({ cart, setCart, product }) {
                <img src="/imgs/dummy-rating-stars.png" />
             </div>
             <bdi className="price">{product.price} $</bdi>
-            <button
-               onClick={() =>
-                  !cart.some((item) => item.name === product.name) &&
-                  setCart((prev) => [...prev, { ...product, quantity: 0 }])
-               }
-            >
+            <button onClick={() => dispatch(addToCart(product))}>
                Add to Cart
             </button>
          </div>

@@ -4,12 +4,12 @@
    min-height: 500px;
    background-color: #eee;
    color: #333;
-   margin: 3rem;
+   margin: 3rem 1rem;
    padding: 1rem;
 }
 
 .cart .cart-body {
-   height: 400px;
+   height: 300px;
    width: 99%;
    overflow-y: auto;
    display: flex;
@@ -21,10 +21,10 @@
 .cart .cart-body .cart-item {
    display: flex;
    width: 95%;
-   height: 25%;
+   height: 20%;
    margin: 5px 0;
-   padding: 7px 0;
-   border-bottom: 2px solid #999;
+   padding: 13px 0;
+   border-bottom: 1px solid #999;
    justify-content: flex-start;
    gap: 5px;
    align-items: center;
@@ -40,6 +40,9 @@
 
 .cart .cart-body .cart-item .cart-item-info {
    flex: 2;
+}
+.cart .cart-body .cart-item .cart-item-info .item-name {
+   font-weight: bold;
 }
 .cart .cart-body .cart-item .cart-item-info .cart-quantity {
    display: flex;
@@ -63,6 +66,10 @@
 }
 .cart .cart-body .cart-item .price {
    font-weight: bold;
+   min-width: 45px;
+   text-align: center;
+   align-self: flex-start;
+   padding-top: 5px;
 }
 .cart .cart-body .cart-item .cart-remove-btn {
    font-weight: bold;
@@ -70,4 +77,22 @@
    color: red;
    cursor: pointer;
    font-size: 1.1rem;
+}
+
+.cart .cart-footer {
+   padding: 10px 20px;
+   text-align: right;
+   display: flex;
+   align-items: flex-end;
+   flex-direction: column;
+   gap: 10px;
+}
+.cart .cart-footer > div > label {
+   display: block;
+   font-weight: bold;
+   color: #777;
+}
+.cart .cart-footer > div > bdi {
+   display: block;
+   font-weight: bold;
 }

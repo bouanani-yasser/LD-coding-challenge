@@ -8,6 +8,7 @@
 
 .productsList .product-item {
    display: grid;
+   max-width: 500px;
    grid-template-columns: 1fr 3fr 2fr;
    grid-template-rows: masonry;
    margin: 20px 10px;
@@ -22,12 +23,17 @@
    font-weight: bold;
    font-size: 1.2rem;
 }
+.productsList .product-item .product-details .desc {
+   font-size: 0.8rem;
+   color: #999;
+   line-height: 1rem;
+}
 .productsList .product-item .product-info {
    padding: 5px;
    gap: 5px;
    display: flex;
    flex-direction: column;
-   justify-content: flex-end;
+   justify-content: flex-start;
    text-align: right;
 }
 .productsList .product-item .product-info .price {
@@ -36,12 +42,12 @@
 }
 .productsList .product-item .product-info button {
    font-weight: bold;
-   font-size: 1.2rem;
+   font-size: 1rem;
    border-radius: 8px;
    border: none;
    color: #111;
-   background: rgb(142, 201, 255);
-   padding: 10px 5px;
+   background: rgb(182, 198, 212);
+   padding: 10px 0px;
    cursor: pointer;
    transition: 0.3s;
    transform: scale(1);
