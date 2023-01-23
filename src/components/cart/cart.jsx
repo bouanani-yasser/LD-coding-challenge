@@ -1,5 +1,28 @@
 import './cart.css';
-function Cart({ cart }) {
+import { useReducer } from 'react';
+
+// const qntReducer = (state, action) => {
+//    switch (action.type) {
+//       case 'increment':
+//          return state.map((product) => {
+//             if (product.name === action.name) {
+//                return { ...product, quantity: product.quantity + 1 };
+//             }
+//             return product;
+//          });
+//       case 'decrement':
+//          return state.map((product) => {
+//             if (product.name === action.name) {
+//                return { ...product, quantity: product.quantity - 1 };
+//             }
+//             return product;
+//          });
+//       default:
+//          throw state;
+//    }
+// };
+
+function Cart({ cart, setCart }) {
    return (
       <div className="cart">
          <h2>Cart</h2>
@@ -9,12 +32,36 @@ function Cart({ cart }) {
             ) : (
                cart.map((cartItem) => (
                   <div className="cart-item" key={cartItem.name}>
-                     <img src={`/imgs/${cartItem.imgPath}`} width="100" />
+                     <img src={`/imgs/${cartItem.imgPath}`} />
                      <div className="cart-item-info">
-                        <h4>{cartItem.name}</h4>
-                        <div className="cart-quantity">quantity 1</div>
+                        <label>{cartItem.name}</label>
+                        <div className="cart-quantity">
+                           quantity{' '}
+                           <button
+                           // onClick={() =>
+                           //    dispatch({
+                           //       type: 'increment',
+                           //       name: cartItem.name,
+                           //    })
+                           // }
+                           >
+                              -
+                           </button>
+                           <label>{cartItem.quantity}</label>
+                           <button>+</button>
+                        </div>
                      </div>
                      <bdi className="price">{cartItem.price} $</bdi>
+                     <button
+                        className="cart-remove-btn"
+                        onClick={() =>
+                           setCart((prev) =>
+                              prev.filter((item) => item.name !== cartItem.name)
+                           )
+                        }
+                     >
+                        x
+                     </button>
                   </div>
                ))
             )}

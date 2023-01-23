@@ -8,8 +8,8 @@ function App() {
 
    return (
       <div className="app">
-         <ProductsList setCart={setCart} />
-         <Cart cart={cart} />
+         <ProductsList setCart={setCart} cart={cart} />
+         <Cart cart={cart} setCart={setCart} />
       </div>
    );
 }
