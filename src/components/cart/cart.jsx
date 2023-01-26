@@ -1,10 +1,10 @@
 import './cart.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import CartItem from './cartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTotal } from '../../store/actions/cart';
 
-function Cart() {
+const Cart = memo(() => {
    const dispatch = useDispatch();
    const { cart, subtotal, discount, total } = useSelector(
       (state) => state.cart
@@ -16,7 +16,7 @@ function Cart() {
       calcTotalAndDiscount(cart);
    }, [cart]);
 
-   const calcTotalAndDiscount = (cart) => {
+   const calcTotalAndDiscount = useCallback((cart) => {
       let discount = 0;
       let breadAt50 = 0;
       setHasDiscount({});
@@ -62,7 +62,7 @@ function Cart() {
       }, 0);
 
       dispatch(updateTotal(subtotal, discount));
-   };
+   }, []);
 
    return (
       <div className="cart">
@@ -96,6 +96,6 @@ function Cart() {
          </div>
       </div>
    );
-}
+});
 
 export default Cart;

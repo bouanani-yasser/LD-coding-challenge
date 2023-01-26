@@ -1,14 +1,20 @@
 import { useDispatch } from 'react-redux';
+import { memo, useCallback } from 'react';
 import {
    removeFromCart,
    incrementQuantity,
    decrementQuantity,
 } from '../../store/actions/cart';
 
-function CartItem({ cartItem, hasDiscount }) {
+const CartItem = memo(({ cartItem, hasDiscount }) => {
    const dispatch = useDispatch();
 
-   console.log(hasDiscount);
+   const dispatchHandler = useCallback((type, cartItem) => {
+      type === 'inc'
+         ? dispatch(incrementQuantity(cartItem))
+         : dispatch(decrementQuantity(cartItem));
+   }, []);
+
    return (
       <div className="cart-item">
          <img src={`/imgs/${cartItem.imgPath}`} />
@@ -16,11 +22,11 @@ function CartItem({ cartItem, hasDiscount }) {
             <label className="item-name">{cartItem.name}</label>
             <div className="cart-quantity">
                quantity
-               <button onClick={() => dispatch(decrementQuantity(cartItem))}>
+               <button onClick={(cartItem) => dispatchHandler('inc', cartItem)}>
                   -
                </button>
                <label>{cartItem.quantity}</label>
-               <button onClick={() => dispatch(incrementQuantity(cartItem))}>
+               <button onClick={(cartItem) => dispatchHandler('inc', cartItem)}>
                   +
                </button>
             </div>
@@ -47,6 +53,5 @@ function CartItem({ cartItem, hasDiscount }) {
          </button>
       </div>
    );
-}
-
+});
 export default CartItem;
