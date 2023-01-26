@@ -7,9 +7,10 @@ import App from './App';
 import './index.css';
 
 // to use redux DevTools
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer, composeEnhancers());
+// const store = createStore(reducer, composeEnhancers());
+const store = createStore(reducer);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
    <React.StrictMode>
