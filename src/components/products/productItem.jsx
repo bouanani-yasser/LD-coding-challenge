@@ -14,7 +14,7 @@ function ProductItem({ product }) {
             <div>
                <img src="/imgs/dummy-rating-stars.png" />
             </div>
-            <bdi className="price">{product.price} $</bdi>
+            <bdi className="price">{product.price.toFixed(2)} $</bdi>
             <button onClick={() => dispatch(addToCart(product))}>
                Add to Cart
             </button>

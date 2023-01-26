@@ -8,7 +8,7 @@
 
 .productsList .product-item {
    display: grid;
-   max-width: 500px;
+   max-width: 455px;
    grid-template-columns: 1fr 3fr 2fr;
    grid-template-rows: masonry;
    margin: 20px 10px;
@@ -57,7 +57,7 @@
    color: #333;
 }
 .productsList .product-item .product-info img {
-   width: 8rem;
+   width: 6rem;
 }
 .productsList .product-item > img {
    width: 90px;

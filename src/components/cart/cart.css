@@ -1,6 +1,6 @@
 .cart {
    min-width: 200px;
-   width: 500px;
+   width: 350px;
    min-height: 500px;
    background-color: #eee;
    color: #333;
@@ -69,8 +69,14 @@
    min-width: 45px;
    text-align: center;
    align-self: flex-start;
-   padding-top: 5px;
+   padding-top: 6px;
 }
+
+.cart .cart-body .cart-item .price:has(.total) .subtotal {
+   text-decoration: line-through;
+   color: red;
+}
+
 .cart .cart-body .cart-item .cart-remove-btn {
    font-weight: bold;
    border: none;

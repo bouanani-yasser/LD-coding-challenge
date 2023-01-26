@@ -1,14 +1,69 @@
 import './cart.css';
+import { useEffect, useState } from 'react';
+import CartItem from './cartItem';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-   removeFromCart,
-   incrementQuantity,
-   decrementQuantity,
-} from '../../store/actions/cart';
+import { updateTotal } from '../../store/actions/cart';
 
 function Cart() {
-   const { cart } = useSelector((state) => state.cart);
    const dispatch = useDispatch();
+   const { cart, subtotal, discount, total } = useSelector(
+      (state) => state.cart
+   );
+
+   const [hasDiscount, setHasDiscount] = useState({});
+
+   useEffect(() => {
+      calcTotalAndDiscount(cart);
+   }, [cart]);
+
+   const calcTotalAndDiscount = (cart) => {
+      let discount = 0;
+      let breadAt50 = 0;
+      setHasDiscount({});
+      // check for bread discount availability
+      cart.forEach((cartItem) => {
+         if (cartItem.name === 'butter' && cartItem.quantity >= 2) {
+            breadAt50 = 1;
+         }
+      });
+
+      let subtotal = cart.reduce((subtotal, product) => {
+         switch (product.name) {
+            case 'milk':
+               // check for milk discount availability
+               if (product.quantity >= 4) {
+                  const freeMilk = Math.floor(product.quantity / 4);
+                  discount += freeMilk * product.price;
+                  setHasDiscount((prev, id = product.id) => ({
+                     ...prev,
+                     [id]: discount,
+                  }));
+               }
+               subtotal += product.quantity * product.price;
+               break;
+            case 'butter':
+               subtotal += product.quantity * product.price;
+               break;
+            case 'bread':
+               if (breadAt50) {
+                  discount += 0.5 * product.price;
+                  setHasDiscount((prev, id = product.id) => ({
+                     ...prev,
+                     [id]: discount,
+                  }));
+               }
+               subtotal += product.quantity * product.price;
+
+               break;
+            default:
+               subtotal += product.quantity * product.price;
+         }
+         return subtotal;
+      }, 0);
+
+      dispatch(updateTotal(subtotal, discount));
+   };
+
    return (
       <div className="cart">
          <h2>Cart</h2>
@@ -17,52 +72,26 @@ function Cart() {
                <p style={{ margin: 'auto' }}>your cart is empty!</p>
             ) : (
                cart?.map((cartItem) => (
-                  <div className="cart-item" key={cartItem.id}>
-                     <img src={`/imgs/${cartItem.imgPath}`} />
-                     <div className="cart-item-info">
-                        <label className="item-name">{cartItem.name}</label>
-                        <div className="cart-quantity">
-                           quantity
-                           <button
-                              onClick={() =>
-                                 dispatch(decrementQuantity(cartItem.id))
-                              }
-                           >
-                              -
-                           </button>
-                           <label>{cartItem.quantity}</label>
-                           <button
-                              onClick={() =>
-                                 dispatch(incrementQuantity(cartItem.id))
-                              }
-                           >
-                              +
-                           </button>
-                        </div>
-                     </div>
-                     <bdi className="price">{cartItem.price} $</bdi>
-                     <button
-                        className="cart-remove-btn"
-                        onClick={() => dispatch(removeFromCart(cartItem.id))}
-                     >
-                        x
-                     </button>
-                  </div>
+                  <CartItem
+                     cartItem={cartItem}
+                     key={cartItem.id}
+                     hasDiscount={hasDiscount}
+                  />
                ))
             )}
          </div>
          <div className="cart-footer">
             <div className="cart-subtotal">
                <label>Subtotal</label>
-               <bdi> 1 $</bdi>
+               <bdi>{subtotal.toFixed(2)} $</bdi>
             </div>
             <div className="cart-discount">
                <label>Discount</label>
-               <bdi> 1 $</bdi>
+               <bdi>{discount.toFixed(2)} $</bdi>
             </div>
             <div className="cart-total">
                <label>Total</label>
-               <bdi> 1 $</bdi>
+               <bdi>{total.toFixed(2)} $</bdi>
             </div>
          </div>
       </div>

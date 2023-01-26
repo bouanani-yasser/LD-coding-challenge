@@ -20,8 +20,6 @@ To Visit App:
 
 <!-- Click [here](https://would-you-rather-app-react-nd.netlify.app/) to go to the app. -->
 
-## Project Screen Shots
+## Project ScreenShot
 
-<!-- ![Home page](public/screenshots/leaderboard.jpg?raw=true 'Home page') -->
-
-<!-- ![Search page](public/screenshots/pollresult.jpg?raw=true 'Search page') -->
+![Search page](public/imgs/LD.png?raw=true 'Search page')
