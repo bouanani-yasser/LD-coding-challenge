@@ -1,10 +1,10 @@
 import './cart.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import CartItem from './cartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTotal } from '../../store/actions/cart';
 
-function Cart() {
+const Cart = memo(() => {
    const dispatch = useDispatch();
    const { cart, subtotal, discount, total } = useSelector(
       (state) => state.cart
@@ -16,8 +16,9 @@ function Cart() {
       calcTotalAndDiscount(cart);
    }, [cart]);
 
-   const calcTotalAndDiscount = (cart) => {
-      let discount = 0;
+   const calcTotalAndDiscount = useCallback((cart) => {
+      let disMilk = 0;
+      let disBread = 0;
       let breadAt50 = 0;
       setHasDiscount({});
       // check for bread discount availability
@@ -33,10 +34,10 @@ function Cart() {
                // check for milk discount availability
                if (product.quantity >= 4) {
                   const freeMilk = Math.floor(product.quantity / 4);
-                  discount += freeMilk * product.price;
-                  setHasDiscount((prev, id = product.id) => ({
+                  disMilk += freeMilk * product.price;
+                  setHasDiscount((prev, name = product.name) => ({
                      ...prev,
-                     [id]: discount,
+                     [name]: disMilk,
                   }));
                }
                subtotal += product.quantity * product.price;
@@ -46,10 +47,10 @@ function Cart() {
                break;
             case 'bread':
                if (breadAt50) {
-                  discount += 0.5 * product.price;
-                  setHasDiscount((prev, id = product.id) => ({
+                  disBread += 0.5 * product.price;
+                  setHasDiscount((prev, name = product.name) => ({
                      ...prev,
-                     [id]: discount,
+                     [name]: disBread,
                   }));
                }
                subtotal += product.quantity * product.price;
@@ -61,8 +62,8 @@ function Cart() {
          return subtotal;
       }, 0);
 
-      dispatch(updateTotal(subtotal, discount));
-   };
+      dispatch(updateTotal(subtotal, disBread + disMilk));
+   }, []);
 
    return (
       <div className="cart">
@@ -96,6 +97,6 @@ function Cart() {
          </div>
       </div>
    );
-}
+});
 
 export default Cart;

@@ -18,7 +18,7 @@ To Visit App:
 
 ## Live version for the app
 
-<!-- Click [here](https://would-you-rather-app-react-nd.netlify.app/) to go to the app. -->
+Click [here](https://ld-coding-challenge.netlify.app/) to go to the app.
 
 ## Project ScreenShot
 
